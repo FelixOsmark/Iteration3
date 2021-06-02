@@ -1,0 +1,61 @@
+CREATE TABLE `consent` (
+  `idConsent` int NOT NULL AUTO_INCREMENT,
+  `status` tinyint(1) NOT NULL,
+  `CPR` int NOT NULL,
+  PRIMARY KEY (`idConsent`),
+  FOREIGN KEY (`CPR`) REFERENCES `patient` (`CPR`)
+);
+
+CREATE TABLE `healthprof` (
+  `idHP` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `tnumber` int NOT NULL,
+  `address` varchar(50) DEFAULT NULL,
+  `occupation` varchar(45) NOT NULL,
+  PRIMARY KEY (`idHP`)
+);
+
+CREATE TABLE `mutation` (
+  `idMutation` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(50) NOT NULL,
+  `registerDate` date NOT NULL,
+  `location` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`idMutation`)
+);
+
+CREATE TABLE `patient` (
+  `CPR` int NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `birthDate` date NOT NULL,
+  `tNumber` int NOT NULL,
+  `address` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`CPR`)
+);
+
+CREATE TABLE `patientdata` (
+  `idPatientData` int NOT NULL AUTO_INCREMENT,
+  `Geolocation` varchar(255) NOT NULL,
+  `Sensor` varchar(255) NOT NULL,
+  `Consent` tinyint(1) NOT NULL,
+  `CPR` int NOT NULL,
+  PRIMARY KEY (`idPatientData`),
+  FOREIGN KEY (`CPR`) REFERENCES `patient` (`CPR`)
+);
+
+CREATE TABLE `stakeholder` (
+  `idStakeholder` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `CPR` int NOT NULL,
+  `tnumber` int NOT NULL,
+  PRIMARY KEY (`idStakeholder`)
+);
+
+CREATE TABLE `test` (
+  `idTest` int NOT NULL AUTO_INCREMENT,
+  `result` tinyint(1) DEFAULT NULL,
+  `type` varchar(50) NOT NULL,
+  `testDate` date DEFAULT NULL,
+  `idHP` int NOT NULL,
+  PRIMARY KEY (`idTest`),
+  FOREIGN KEY (`idHP`) REFERENCES `healthprof` (`idHP`)
+);
